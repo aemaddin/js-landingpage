@@ -43,17 +43,20 @@ const mainUlFrag = document.createDocumentFragment();
 for (const section of sections) {
     // create new li element
     const nav_li = document.createElement('li');
+    const nav_a = document.createElement('a');
 
     // add text that stored in data-nav section attribute
-    nav_li.textContent = section.getAttribute("data-nav");
+    nav_a.textContent = section.getAttribute("data-nav");
 
     // add class menu__link to make it selected
-    nav_li.classList.add('menu__link');
+    nav_a.classList.add('menu__link');
+
+    nav_a.setAttribute('href', 'javascript:void(0);')
 
     // use this to detect the li on scrolling
-    nav_li.setAttribute('data-section-id', section.getAttribute('id'))
+    nav_a.setAttribute('data-section-id', section.getAttribute('id'))
 
-    nav_li.addEventListener('click', (e) => activateSection(e.target))
+    nav_a.addEventListener('click', (e) => activateSection(e.target))
 
     document.addEventListener('scroll', function (e) {
         if (isInViewport(section)) {
@@ -74,12 +77,13 @@ for (const section of sections) {
             }
 
             // activate showed nav item
-            nav_li.classList.add('active');
+            nav_a.classList.add('active');
 
             // activate showed section
             section.classList.add('your-active-class');
         }
     })
+    nav_li.appendChild(nav_a);
     mainUlFrag.appendChild(nav_li);
 }
 
