@@ -1,13 +1,15 @@
 # Landing Page Project
 
-## Table of Contents
+## About Landing Page
 
-* [Instructions](#instructions)
+Landingpage is a web application that contains 4 sections with responsive design 
+using `html`, `javascript` and `css`.
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+- You can add a new section on `/index.html` file direct and navigation bar will be works just fine.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## TODO List
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+[] Redesign the nav bar to apply hamburger style on mobile and tablets.
+[] Crete another page to add content, and it will reflect directly on home page.
