@@ -23,7 +23,7 @@ body {
 }
 
 
-/* Typeography General*/
+/* Typography General*/
 h1 {
     font-family: 'Fira Sans', sans-serif;
     font-size: 3em;
@@ -39,7 +39,7 @@ h1 {
 
 h2 {
     border-bottom: 1px solid #cc1;
-    font-family: 'Oxygen', Sans-Serif;
+    font-family: 'Oxygen', Sans-Serif, serif;
     font-size: 3em;
     color: #fff;
 }
@@ -79,12 +79,14 @@ section {
         display: flex;
     }
 
-    .navbar__menu .menu__link {
-        display: block;
-        padding: 1em;
-        font-weight: bold;
-        text-decoration: none;
-        color: #000;
+    .navbar__menu .menu__link:hover {
+        background: #333;
+        color: #fff;
+        transition: ease 0.3s;
+    }
+
+    .topnav {
+        display: none;
     }
 }
 
@@ -95,31 +97,65 @@ section {
         margin: 0;
         overflow: hidden;
         text-align: left;
-        display: flex;
-        flex-direction: column;
+        display: none;
+        background: #fff;
     }
 
-    .navbar__menu .menu__link {
-        display: block;
-        padding: 1em;
-        font-weight: bold;
-        text-decoration: none;
-        color: #000;
+    .navbar__menu {
+        height: 50px;
     }
+
+    .topnav {
+        overflow: hidden;
+        background-color: #fff;
+        position: relative;
+    }
+
+    .topnav a {
+        color: black;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        display: block;
+    }
+
+    .topnav a.icon {
+        color: black;
+        display: block;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+}
+
+.navbar__menu .menu__link {
+    display: block;
+    padding: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+}
+
+.navbar__menu .mobile__menu__link {
+    display: block;
+    padding: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
 }
 
 .navbar__menu li {
     display: inline-block;
-}
-
-.navbar__menu .menu__link:hover {
-    background: #333;
-    color: #fff;
-    transition: ease 0.3s all;
+    cursor: pointer;
 }
 
 .active {
-    background: #333;
+    background: #333 !important;
     color: #fff !important;
 }
 
@@ -176,7 +212,7 @@ section:nth-of-type(odd) .landing__container::before {
     height: 20vh;
     border-radius: 50%;
     opacity: 0;
-    transition: ease 0.5s all;
+    transition: ease 0.5s;
 }
 
 section:nth-of-type(even) .landing__container::before {
@@ -191,7 +227,7 @@ section:nth-of-type(even) .landing__container::before {
     height: 10vh;
     border-radius: 50%;
     opacity: 0;
-    transition: ease 0.5s all;
+    transition: ease 0.5s;
 }
 
 section:nth-of-type(3n) .landing__container::after {
@@ -206,7 +242,7 @@ section:nth-of-type(3n) .landing__container::after {
     height: 10vh;
     border-radius: 50%;
     opacity: 0;
-    transition: ease 0.5s all;
+    transition: ease 0.5s;
 }
 
 section:nth-of-type(3n + 1) .landing__container::after {
@@ -221,7 +257,7 @@ section:nth-of-type(3n + 1) .landing__container::after {
     height: 15vh;
     border-radius: 50%;
     opacity: 0;
-    transition: ease 0.5s all;
+    transition: ease 0.5s;
 }
 
 

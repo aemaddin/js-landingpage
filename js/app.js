@@ -17,66 +17,87 @@
 const sections = document.getElementsByTagName('section');
 
 const nav = document.getElementById("navbar__list");
+const nav_mobile = document.getElementById("navbar__mobile__list");
 const mainUlFrag = document.createDocumentFragment();
+const mobileUlFrag = document.createDocumentFragment();
 
 /**
  * loop into all sections to append it to the nav bar
  */
 for (const section of sections) {
-    // create new li element
-    const nav_li = document.createElement('li');
-    const nav_a = document.createElement('a');
+    const nav_li = addATagToSection(section);
+    const nav_mobile_li = addATagToSection(section, 'mobile__menu__link');
 
-    // add text that stored in data-nav section attribute
-    nav_a.textContent = section.getAttribute("data-nav");
+    nav_li.addEventListener('click', (e) => {
+        deactivateAllSections();
+        activateSection(e.target, true);
+    });
 
-    // add class menu__link to make it selected
-    nav_a.classList.add('menu__link');
+    nav_mobile_li.addEventListener('click', (e) => {
+        openMenu();
+        deactivateAllSections();
+        activateSection(e.target, true);
+    });
 
-    nav_a.setAttribute('href', 'javascript:void(0);')
+    activateSectionOnScroll(section, nav_mobile_li, 'mobile__menu__link');
+    activateSectionOnScroll(section, nav_li, 'menu__link');
 
-    // use this to detect the li on scrolling
-    nav_a.setAttribute('data-section-id', section.getAttribute('id'))
-
-    nav_a.addEventListener('click', (e) => activateSection(e.target))
-
-    document.addEventListener('scroll', function (e) {
-        if (isInViewport(section)) {
-            // get all menu links
-            const nav_items = document.querySelectorAll('.menu__link')
-
-            // deactivate all
-            for (const item of nav_items) {
-                item.classList.remove('active');
-            }
-
-            // get all active sections which is supposed to be only one
-            const active_section = document.querySelectorAll('.your-active-class')
-
-            // deactivate all active sections
-            for (const section of active_section) {
-                section.classList.remove('your-active-class');
-            }
-
-            // activate showed nav item
-            nav_a.classList.add('active');
-
-            // activate showed section
-            section.classList.add('your-active-class');
-        }
-    })
-    nav_li.appendChild(nav_a);
     mainUlFrag.appendChild(nav_li);
+    mobileUlFrag.appendChild(nav_mobile_li);
 }
 
 nav.appendChild(mainUlFrag);
+nav_mobile.appendChild(mobileUlFrag);
+
+function addATagToSection(section, class_name = 'menu__link') {
+    const liElement = document.createElement('li');
+
+    liElement.textContent = section.getAttribute("data-nav");
+    liElement.classList.add(class_name);
+    liElement.setAttribute('data-section-id', section.getAttribute('id'))
+
+    return liElement;
+}
+
+function activateSectionOnScroll(section, nav, class_name = 'menu__link') {
+    document.addEventListener('scroll', function (e) {
+        if (isInViewport(section)) {
+            deactivateAllSections(class_name);
+            activateSection(nav, false);
+        }
+    })
+}
 
 /**
- * activate section will search for all active sections and nav links to deactivate it then activate the chosen one
+ * activate section will search for all active sections
+ * and nav links to deactivate it then activate the chosen one
+ *
  * @param target
+ * @param withScroll
  */
-function activateSection(target) {
-    const nav_items = document.querySelectorAll('.menu__link')
+function activateSection(target, withScroll = false) {
+
+    const $navbar__mobile__placeholder = document.getElementById('navbar__mobile__placeholder');
+
+    const $selected_section = document.getElementById(
+        target.getAttribute('data-section-id')
+    )
+
+    $selected_section.classList.add('your-active-class');
+
+    $navbar__mobile__placeholder.textContent = $selected_section.getAttribute('data-nav');
+    target.classList.add('active');
+
+    if (withScroll) {
+        $selected_section.scrollIntoView();
+    }
+}
+
+/**
+ * deactivate all active sections before selecting another
+ */
+function deactivateAllSections(class_name = 'menu__link') {
+    const nav_items = document.querySelectorAll(`.${class_name}`)
     for (const item of nav_items) {
         item.classList.remove('active');
     }
@@ -85,14 +106,6 @@ function activateSection(target) {
     for (const section of active_section) {
         section.classList.remove('your-active-class');
     }
-
-    const $selected_section = document.getElementById(
-        target.getAttribute('data-section-id')
-    )
-    $selected_section.classList.add('your-active-class');
-    $selected_section.scrollIntoView();
-
-    target.classList.add('active')
 }
 
 /**
@@ -102,11 +115,14 @@ function activateSection(target) {
  * @returns {boolean}
  */
 function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+    return window.pageYOffset >= element.offsetTop - 200;
+}
+
+function openMenu() {
+    const menu = document.getElementById("navbar__mobile__list");
+    if (menu.style.display === "block") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
 }

@@ -9,12 +9,21 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">
     <!-- Load Styles -->
     <link href="css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <!-- HTML Follows BEM naming conventions
 IDs are only used for sections to connect menu achors to sections -->
 <header class="page__header">
     <nav class="navbar__menu">
+        <div class="topnav">
+            <a id="navbar__mobile__placeholder" href="javascript:void(0);" style="background: #ffffff80">Section 1</a>
+            <ul id="navbar__mobile__list"></ul>
+            <a href="javascript:void(0);" class="icon" onclick="openMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+
         <!-- Navigation starts as empty UL that will be populated with JS -->
         <ul id="navbar__list"></ul>
     </nav>
