@@ -34,7 +34,7 @@ for (const section of sections) {
     });
 
     nav_mobile_li.addEventListener('click', (e) => {
-        openMenu();
+        toggleMenu();
         deactivateAllSections();
         activateSection(e.target, true);
     });
@@ -49,6 +49,13 @@ for (const section of sections) {
 nav.appendChild(mainUlFrag);
 nav_mobile.appendChild(mobileUlFrag);
 
+/**
+ * Add section id as a tag to use it on scrolling
+ *
+ * @param section
+ * @param class_name
+ * @returns {HTMLLIElement}
+ */
 function addATagToSection(section, class_name = 'menu__link') {
     const liElement = document.createElement('li');
 
@@ -59,6 +66,13 @@ function addATagToSection(section, class_name = 'menu__link') {
     return liElement;
 }
 
+/**
+ * activate section menu item on scrolling
+ *
+ * @param section
+ * @param nav
+ * @param class_name
+ */
 function activateSectionOnScroll(section, nav, class_name = 'menu__link') {
     document.addEventListener('scroll', function (e) {
         if (isInViewport(section)) {
@@ -118,7 +132,10 @@ function isInViewport(element) {
     return window.pageYOffset >= element.offsetTop - 200;
 }
 
-function openMenu() {
+/**
+ * toggle hamburger menu
+ */
+function toggleMenu() {
     const menu = document.getElementById("navbar__mobile__list");
     if (menu.style.display === "block") {
         menu.style.display = "none";
